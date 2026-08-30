@@ -45,8 +45,8 @@ let random_move = fn(e: Entity) {
 }
 
 let new_entity = fn(
-        char: str, x: int, y: int, width: int, height: int, profile: array
-    ) Entity {
+    char: str, x: int, y: int, width: int, height: int, profile: array
+) Entity{
     return Entity{
         profile[0],
         char,

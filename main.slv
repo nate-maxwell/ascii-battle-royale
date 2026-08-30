@@ -10,13 +10,11 @@ let time = import("time")
 let screen = import("./screen.slv")
 let entity = import("./entity.slv")
 
-
 let width = terminal.width()
 let height = terminal.height()
 
 let display = screen.new_screen(width, height)
 let ants = []
-
 
 let create_ants = fn() {
     let characters = [
@@ -42,11 +40,9 @@ let create_ants = fn() {
     }
 }
 
-
 let update_ant_positions = fn() {
     for ant in ants { ant.move_randomly() }
 }
-
 
 let resolve_collisions = fn(ants_: array) {
     let occupied = {}
@@ -63,7 +59,6 @@ let resolve_collisions = fn(ants_: array) {
 
     ants = survivors
 }
-
 
 let main = fn() {
     terminal.cursor_hide()
@@ -86,6 +81,5 @@ let main = fn() {
         display.draw()
     }
 }
-
 
 main()
