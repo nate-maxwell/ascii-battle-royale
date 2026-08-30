@@ -14,6 +14,7 @@ let directions = [
     Point{1, 0}
 ]
 
+# Move speed + color
 let profiles = [
     [2, "#00ffff"],
     [4, "#ff33cc"],
@@ -21,16 +22,18 @@ let profiles = [
 ]
 
 struct Entity {
-    speed: int
-    char: str
-    color: str
-    pos:: Point
-    width: int
-    height: int
-    move_randomly: call(Entity)
+    speed: int # Maximum travel distance in a single turn
+    char: str # The character to represent the entity
+    color: str # Color to display the character in termianl
+    pos:: Point # Current position
+    width: int # Battleground width
+    height: int # Battleground height
+    move_randomly: call(Entity) # Behavior for randomly moving to a new location
 }
 
 let random_move = fn(e: Entity) {
+    # Randomly move the entity to a new position without crossing width and
+    # height constraints.
     let direction = random.randelem(directions)
     let distance = random.randint(0, e.speed)
 
