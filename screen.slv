@@ -1,0 +1,65 @@
+# Screen and grid management
+
+let arrays = import("arrays")
+let core = import("core")
+let terminal = import("terminal")
+
+let white = "#ffffff"
+
+struct Cell {
+    char: str
+    color: str
+}
+
+struct Screen {
+    width: int
+    height: int
+    grid: array
+    draw: call(Screen)
+    update: call(Screen, array)
+}
+
+let update_screen = fn(s: Screen, entities: array) {
+    for y in core.range(0, s.height) {
+        for x in core.range(0, s.width) {
+            s.grid[y][x] = Cell{" ", white}
+        }
+    }
+
+    for entity in entities {
+        s.grid[entity.y][entity.x] = entity
+    }
+}
+
+let draw_screen = fn(s: Screen) {
+    let y = 0
+    for row in s.grid {
+        terminal.cursor_move(0, y)
+        for col in row {
+            terminal.colored(col.char, col.color)
+        }
+        y = y + 1
+    }
+}
+
+let new_screen = fn(w: int, h: int) Screen {
+    let grid = []
+
+    for y in core.range(0, h) {
+        let row = []
+
+        for x in core.range(0, w) {
+            row = arrays.append(row, Cell{" ", white})
+        }
+
+        grid = arrays.append(grid, row)
+    }
+
+    return Screen{
+        w,
+        h,
+        grid,
+        draw_screen,
+        update_screen
+    }
+}

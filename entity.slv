@@ -1,0 +1,59 @@
+# Moving entities displayed on the terminal grid.
+
+let random = import("random")
+
+struct Point {
+    x: int
+    y: int
+}
+
+let directions = [
+    Point{0, 1},
+    Point{0,-1},
+    Point{-1, 0},
+    Point{1, 0}
+]
+
+let profiles = [
+    [2, "#00ffff"],
+    [4, "#ff33cc"],
+    [8, "#ffff00"]
+]
+
+struct Entity {
+    speed: int
+    char: str
+    color: str
+    pos:: Point
+    width: int
+    height: int
+    move_randomly: call(Entity)
+}
+
+let random_move = fn(e: Entity) {
+    let direction = random.randelem(directions)
+    let distance = random.randint(0, e.speed)
+
+    let new_x = e.x + direction.x * distance
+    let new_y = e.y + direction.y * distance
+
+    if new_x >= 0 && new_x < e.width &&
+    new_y >= 0 && new_y < e.height{
+        e.x = new_x
+        e.y = new_y
+    }
+}
+
+let new_entity = fn(
+        char: str, x: int, y: int, width: int, height: int, profile: array
+    ) Entity {
+    return Entity{
+        profile[0],
+        char,
+        profile[1],
+        Point{x, y},
+        width,
+        height,
+        random_move
+    }
+}

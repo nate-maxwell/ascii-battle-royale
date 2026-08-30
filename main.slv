@@ -1,0 +1,91 @@
+# Main entry point into the terminal farm simulator.
+
+let arrays = import("arrays")
+let core = import("core")
+let maps = import("maps")
+let random = import("random")
+let terminal = import("terminal")
+let time = import("time")
+
+let screen = import("./screen.slv")
+let entity = import("./entity.slv")
+
+
+let width = terminal.width()
+let height = terminal.height()
+
+let display = screen.new_screen(width, height)
+let ants = []
+
+
+let create_ants = fn() {
+    let characters = [
+        "A", "B", "C", "D", "E", "F", "G", "H",
+        "I", "J", "K", "L", "M", "N", "O", "P",
+        "Q", "R", "S", "T", "U", "V", "W", "X",
+        "Y", "Z", "!", "@", "#", "$", "%", "^",
+        "&", "*", "(", ")", "-", "=", "+", "~",
+        "1", "2", "3", "4", "5", "6", "7", "8",
+        "9", "0", "<", ">", "?", "[", "]", "\\",
+        "{", "}", ";", ":", ".", ",", "`", "|"
+    ]
+    random.shuffle(characters)
+
+    for char in characters {
+        for profile in entity.profiles {
+            let x = random.randint(0, width - 1)
+            let y = random.randint(0, height - 1)
+            ants = arrays.append(
+                ants, entity.new_entity(char, x, y, width, height, profile)
+            )
+        }
+    }
+}
+
+
+let update_ant_positions = fn() {
+    for ant in ants { ant.move_randomly() }
+}
+
+
+let resolve_collisions = fn(ants_: array) {
+    let occupied = {}
+    let survivors = []
+
+    for ant in ants_ {
+        let position = ant.y * width + ant.x
+
+        if !maps.contains(occupied, position) {
+            occupied[position] = True
+            survivors = arrays.append(survivors, ant)
+        }
+    }
+
+    ants = survivors
+}
+
+
+let main = fn() {
+    terminal.cursor_hide()
+
+    create_ants()
+    let duration = time.duration(0.01, "s")
+    let final_stretch = False
+
+    while True {
+        time.sleep(duration)
+
+        update_ant_positions()
+        resolve_collisions(ants)
+        if !final_stretch && core.len(ants) <= 10 {
+            duration = time.duration(0.025, "s")
+            final_stretch = True
+        }
+
+        display.update(ants)
+        display.draw()
+    }
+}
+
+
+main()

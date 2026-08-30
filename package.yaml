@@ -1,0 +1,5 @@
+package: TerminalFarm
+export:
+  - ./main.slv
+  - ./entity.slv
+  - ./screen.slv
