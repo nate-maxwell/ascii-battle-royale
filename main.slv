@@ -58,6 +58,7 @@ let resolve_collisions = fn(ants_: array) {
     }
 
     ants = survivors
+    random.shuffle(ants)
 }
 
 let main = fn() {
