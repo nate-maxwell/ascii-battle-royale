@@ -1,8 +1,8 @@
 # Moving entities displayed on the terminal grid.
 
-let random = import("random")
+let random = import("core:random")
 
-struct Point {
+type Point = struct {
     x: int
     y: int
 }
@@ -15,13 +15,13 @@ let directions = [
 ]
 
 # Move speed + color
-let profiles = [
+let profiles: array[array] = [
     [2, "#00ffff"],
     [4, "#ff33cc"],
     [8, "#ffff00"]
 ]
 
-struct Entity {
+type Entity = struct {
     speed: int # Maximum travel distance in a single turn
     char: str # The character to represent the entity
     color: str # Color to display the character in termianl

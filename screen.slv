@@ -1,17 +1,17 @@
 # Screen and grid management
 
-let arrays = import("arrays")
-let core = import("core")
-let terminal = import("terminal")
+let arrays = import("core:arrays")
+let core = import("core:core")
+let terminal = import("core:terminal")
 
 let white = "#ffffff"
 
-struct Cell {
+type Cell = struct {
     char: str
     color: str
 }
 
-struct Screen {
+type Screen = struct {
     width: int
     height: int
     grid: array

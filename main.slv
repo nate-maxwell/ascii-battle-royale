@@ -1,14 +1,17 @@
 # Main entry point into the terminal farm simulator.
 
-let arrays = import("arrays")
-let core = import("core")
-let maps = import("maps")
-let random = import("random")
-let terminal = import("terminal")
-let time = import("time")
+let arrays = import("core:arrays")
+let core = import("core:core")
+let maps = import("core:maps")
+let random = import("core:random")
+let terminal = import("core:terminal")
+let time = import("core:time")
+let system = import("core:system")
 
-let screen = import("./screen.slv")
-let entity = import("./entity.slv")
+system.append_path("T:/git/ascii-battle-royale/package.yaml")
+
+let screen = import("TerminalFarm:screen")
+let entity = import("TerminalFarm:entity")
 
 let width = terminal.width()
 let height = terminal.height()
